@@ -1,7 +1,9 @@
 package main
 
 import (
+	"log"
 	"net/http"
+	"os"
 
 	"github.com/gin-gonic/gin"
 
@@ -31,12 +33,12 @@ func login(c *gin.Context) {
 
 func main() {
 
-	// // Crash early if connection to DB fails
-	// if err := data_registry.InitDB(connString); err != nil {
-		// l.Fatal("Failed to open a database connection: ", err)
-	// }
+	// Crash early if connection to DB fails
+	if err := data_registry.InitDB(os.Getenv("DATABASE_URL")); err != nil {
+		log.Fatal("Failed to open a database connection: ", err)
+	}
 
-	router := gin.New()
+	router := gin.Default()
 
 	router.LoadHTMLGlob("templates/*")
 

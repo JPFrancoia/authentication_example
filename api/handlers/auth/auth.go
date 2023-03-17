@@ -49,13 +49,11 @@ func AuthCallback(c *gin.Context) {
 	// If the user already exists, we'll refresh some minor info e.g
 	// first/last name, but nothing else will change, they'll keep their
 	// existing user_id
-	dbUserId, err := data_registry.UpsertUser(ourUser)
+	err = data_registry.UpsertUser(ourUser)
 	if err != nil {
 		c.AbortWithError(http.StatusInternalServerError, err)
 		return
 	}
-
-	fmt.Println("User: ", dbUserId)
 
 	c.Redirect(http.StatusFound, "/")
 }
